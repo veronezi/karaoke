@@ -13,7 +13,7 @@ deploy_java_bin karaoke/musixmatch karaoke-musixmatch $KARAOKE_VERSION-b$TRAVIS_
 deploy_java_bin karaoke/webapp karaoke-webapp $KARAOKE_VERSION-b$TRAVIS_BUILD_NUMBER war
 
 function deploy_docker_image () {
-    echo "[RUNNING] docker tag $1 veronezi/todo-auth:$2-b$3"
+    echo "[RUNNING] docker tag $1 veronezi/$1:$2-b$3"
     docker tag $1 veronezi/$1:$2-b$3
     echo "[RUNNING] docker push veronezi/$1:$2-b$3"
     docker push veronezi/$1:$2-b$3
