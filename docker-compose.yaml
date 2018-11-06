@@ -1,0 +1,35 @@
+version: '3.7'
+
+services:
+  renderer:
+    image: karaoke-renderer
+    ports:
+    - "3001:3000"
+    environment:
+    - RENDERTRON_URL=http://rendertron:3000/render
+    - FULL_APP_HOST=full:8080
+
+  proxy:
+    image: karaoke-proxy
+    ports:
+    - "80:3000"
+    environment:
+    - API_URL=http://full:8080
+    - RENDERER_URL=http://renderer:3000
+
+  full:
+    image: karaoke
+    ports:
+    - "8080:8080"
+    - "8000:8000"
+    environment:
+    - musixmatch_api_key=${musixmatch_api_key}
+
+
+  rendertron:
+    image: karaoke-rendertron
+    ports:
+    - "3000:3000"
+    cap_add:
+    - SYS_ADMIN
+    shm_size: 268435456

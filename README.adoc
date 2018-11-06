@@ -1,0 +1,132 @@
+= karaoke
+
+== Dependency
+
+1. >= Maven 3.5.2
+1. >= Java 1.8.0_162
+1. >= Docker 18.03.0-ce
+1. Musixmatch API dev token (Create one here: https://developer.musixmatch.com/)
+
+=== Cloud installation dependency
+
+1. >= Google Cloud SDK 204.0.0 (https://cloud.google.com/sdk/docs/quickstarts)
+1. >= Azure CLI 2.0 (https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest)
+
+== Quick run
+
+=== Single App
+
+Execute...
+
+```
+docker run --rm -ti -e "musixmatch_api_key=[your key here]" -p 8080:8080 tveronezi/karaoke:0.0.1-SNAPSHOT
+```
+
+Then open http://localhost:8080
+
+=== Cluster with Server Side Rendering
+
+Go to the root directory of this project and execute...
+
+```
+export musixmatch_api_key=[your key here]
+mvn --projects run docker:run
+```
+
+Then open http://localhost
+
+Test the SSR with `curl -X GET http://localhost/tracks/alanis -H 'Cache-Control: no-cache' -H 'User-Agent: slackbot'`.
+If you see the tracks entries, this means the server successfully pre-rendered the html code before serving the it.
+
+== How to run it locally?
+
+1. Set the musixmatch_api_key environment variable (On linux you do `export musixmatch_api_key=<your token here>`)
+1. Run `mvn clean install` to build the docker images
+1. Run `mvn --projects webapp docker:run@dev` to run the application on development mode
+1. Open http://localhost:8080 to access your application.
+
+=== What is the `development` mode?
+
+On development mode, changes to any file under `webapp/src/main/docker/static/base/src` will be automatically
+pushed to the running http://localhost:8080 server.
+
+You can also debug your backend application running inside the container via remote debugging a the port 8000.
+Simply point your IDE to it.
+
+=== Where is my `node_modules` directory?
+
+It lives inside the docker container. If you want to have your IDE helping with auto complete,
+you will need to have this directory locally. You can create it with the following docker command.
+
+Go to the root directory of this project and run...
+
+```
+docker run --rm -ti -v $(pwd)/webapp/src/main/docker/static/base:/opt --workdir /opt --entrypoint /usr/local/bin/npm node:8.11.1 install
+```
+
+== How to run the server on `production` mode
+
+Simply run the docker image with...
+
+```
+docker run --rm -ti -e musixmatch_api_key=<your token here> -p 8080:8080 tveronezi/karaoke:0.0.1-SNAPSHOT
+```
+
+== Kubernetes deployment
+
+Fist step is to have all your images deployed on docker hub. Run the following command to get it done.
+
+```
+mvn clean install -DskipTests
+mvn docker:push@build
+```
+
+Where `<registry path>` is where you want to install the images. For example `tveronezi`, `gcr.io/tveronezi` etc.
+
+==== minikube
+
+minikube basic commands:
+
+* `minikube start --disk-size=20g --memory=4096 --cpus=4` creates the virtualbox vm.
+* `minikube stop` stops the virtualbox vm but keep of the files.
+* `minikube delete` deletes the virtualbox vm.
+* `kubectl config get-contexts`
+* `kubectl config use-context minikube` points kubectl back to the minikube virtualbox vm cluster.
+* `eval $(minikube docker-env)` points your local docker client to the docker installed on the minikube virtualbox vm.
+* `minikube dashboard` gives you access to the minikube web dashboard.
+* `minikube ip` gives you the IP address of your minikube vm.
+* `minikube service proxy` opens a browser at the endpoint that points to the *proxy* service once its available.
+
+==== gcloud
+
+gcloud basic commands:
+
+* `gcloud container clusters create karaoke-cluster --num-nodes=3 --no-enable-autorepair` creates the cluster.
+* `gcloud container clusters delete karaoke-cluster` deletes the cluster.
+* `gcloud container clusters get-credentials karaoke-cluster` points your kubectl to gcloud.
+* `gcloud compute instances list` retrieves all the running VMs.
+
+==== azure
+
+* `az group create -l westus -n MyResourceGroup`
+* `az group delete -n MyResourceGroup`
+* `az aks create -g MyResourceGroup -n MyManagedCluster`
+* `az aks delete -g MyResourceGroup -n MyManagedCluster`
+* `az aks get-credentials -g MyResourceGroup -n MyManagedCluster`
+
+=== Deploy it!
+
+* `mvn --projects kubernetes fabric8:deploy`
+
+===== These are some useful kubernetes commands:
+
+* `kubectl get deployments` retrieves all the deployments.
+* `kubectl get services` retrieves all the services.
+* `kubectl get pods` retrieves all the pods.
+* `kubectl delete services,deployments,pods --all` deletes everything installed on your kubernetes cluster.
+* `kubectl create -f kubernetes/.` install all the deployment and services under the kubernetes directory.
+* `kubectl port-forward <pod name> 8080:3000` exposes the port 3000 from the pod on your localhost as port 8080. Now you can access your service via `http://localhost:8080/`.
+
+== Resources
+
+1. https://developer.musixmatch.com/documentation
