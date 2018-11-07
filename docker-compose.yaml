@@ -27,7 +27,7 @@ services:
 
 
   rendertron:
-    image: karaoke-rendertron
+    image: veronezi/sample-rendertron:0.0.1-b4
     ports:
     - "3000:3000"
     cap_add:

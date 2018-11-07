@@ -107,7 +107,6 @@
         <module>cache</module>
         <module>api</module>
         <module>webapp</module>
-        <module>servers</module>
         <module>functional</module>
     </modules>
     <repositories>
