@@ -1,5 +1,7 @@
 = TODO
 
+image:https://travis-ci.org/veronezi/karaoke.svg?branch=master["Build Status", link="https://travis-ci.org/veronezi/karaoke"]
+
 == Dependency
 
 1. >= Maven 3.5.2
