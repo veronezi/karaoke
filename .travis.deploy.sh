@@ -16,7 +16,7 @@ deploy_java_bin musixmatch karaoke-musixmatch $KARAOKE_VERSION-b$TRAVIS_BUILD_NU
 deploy_java_bin webapp karaoke-webapp $KARAOKE_VERSION-b$TRAVIS_BUILD_NUMBER war
 
 function deploy_docker_image () {
-    if [ "$TRAVIS_BRANCH" -eq "master" ]; then
+    if [ "$TRAVIS_BRANCH" = "master" ]; then
         echo "deploying docker image veronezi/$1:$2-b$3"
         docker tag $1 veronezi/$1:$2-b$3
         docker push veronezi/$1:$2-b$3
