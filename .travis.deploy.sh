@@ -16,10 +16,7 @@ function deploy_docker_image () {
 }
 
 deploy_docker_image karaoke $KARAOKE_VERSION $TRAVIS_BUILD_NUMBER
-deploy_docker_image karaoke-war $KARAOKE_VERSION $TRAVIS_BUILD_NUMBER
 deploy_docker_image karaoke-proxy $KARAOKE_VERSION $TRAVIS_BUILD_NUMBER
 deploy_docker_image karaoke-renderer $KARAOKE_VERSION $TRAVIS_BUILD_NUMBER
-deploy_docker_image karaoke-static $KARAOKE_VERSION $TRAVIS_BUILD_NUMBER
-deploy_docker_image karaoke-static-install $KARAOKE_VERSION $TRAVIS_BUILD_NUMBER
 
 echo "binaries uploaded"
