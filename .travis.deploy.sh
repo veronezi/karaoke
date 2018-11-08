@@ -19,6 +19,8 @@ if [ "$TRAVIS_EVENT_TYPE" = "push" ]; then
     deploy_docker_image karaoke $KARAOKE_VERSION $TRAVIS_BUILD_NUMBER
     deploy_docker_image karaoke-proxy $KARAOKE_VERSION $TRAVIS_BUILD_NUMBER
     deploy_docker_image karaoke-renderer $KARAOKE_VERSION $TRAVIS_BUILD_NUMBER
+    echo "binaries uploaded"
+else
+    echo "binaries NOT uploaded"
 fi
 
-echo "binaries uploaded"
