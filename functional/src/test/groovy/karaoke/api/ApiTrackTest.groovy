@@ -8,18 +8,38 @@ import org.apache.http.client.ResponseHandler
 import org.apache.http.client.methods.HttpGet
 import org.apache.http.client.utils.URIBuilder
 import org.apache.http.impl.client.HttpClients
-import org.jboss.arquillian.junit.Arquillian
 import org.junit.Assert
 import org.junit.Test
-import org.junit.runner.RunWith
+import org.testcontainers.containers.DockerComposeContainer
+import org.testcontainers.containers.wait.strategy.Wait
 
-@RunWith(Arquillian)
+import java.time.Duration
+
 class ApiTrackTest {
+
+    private static final Duration TIMEOUT = Duration.ofSeconds(120)
+
+    private final DockerComposeContainer stack
+
+    ApiTrackTest() {
+        def dcFile
+        try {
+            dcFile = File.createTempFile("docker-compose", ".yaml")
+            dcFile << ApiTrackTest.class.getResourceAsStream("/dc-tests.yaml")
+        } catch (IOException e) {
+            throw new RuntimeException(e)
+        }
+
+        this.stack = new DockerComposeContainer(dcFile)
+                .withPull(false)
+                .withExposedService("full_1", 8080, Wait.forListeningPort().withStartupTimeout(TIMEOUT))
+        this.stack.start()
+    }
 
     @Test
     void "should load michael jackson's tracks"() {
         def artistName = 'jackson'
-        def url = new URIBuilder('http://localhost:8080'.toURI()
+        def url = new URIBuilder("http://localhost:${this.stack.getServicePort('full_1', 8080)}".toURI()
                 .resolve("api/track/${URLEncoder.encode(artistName, 'UTF-8')}"))
                 .addParameter('page', '1')
                 .addParameter('order_by', 'artist')

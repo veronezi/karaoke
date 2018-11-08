@@ -19,33 +19,33 @@ public class ServiceThirdPartyLyrics {
     @Cached
     public DtoTrack getTrack(long trackId) {
         final Track track = lyricsService.getTrack(trackId);
-        final DtoTrack result = new DtoTrack();
-        result.setId(track.getId());
-        result.setArtist(track.getArtist());
-        result.setTitle(track.getTitle());
-        result.setLength(track.getLength());
-        return result;
+        return DtoTrack.builder()
+                .id(track.getId())
+                .artist(track.getArtist())
+                .title(track.getTitle())
+                .length(track.getLength())
+                .build();
     }
 
     @Cached
     public DtoLyrics getLyrics(DtoTrack track) {
         final Lyrics lyrics = lyricsService.getLyrics(track.getId());
-        final DtoLyrics result = new DtoLyrics();
-        result.setId(lyrics.getId());
-        result.setText(lyrics.getText());
-        result.setTrack(track);
-        return result;
+        return DtoLyrics.builder()
+                .id(lyrics.getId())
+                .text(lyrics.getText())
+                .track(track)
+                .build();
     }
 
     @Cached
     public Collection<DtoTrack> findByArtistName(String artistName) {
-        return lyricsService.findByArtistName(artistName).stream().map(track -> {
-            final DtoTrack dto = new DtoTrack();
-            dto.setId(track.getId());
-            dto.setTitle(track.getTitle());
-            dto.setLength(track.getLength());
-            dto.setArtist(track.getArtist());
-            return dto;
-        }).collect(Collectors.toList());
+        return lyricsService.findByArtistName(artistName).stream()
+                .map(track -> DtoTrack.builder()
+                        .id(track.getId())
+                        .title(track.getTitle())
+                        .length(track.getLength())
+                        .artist(track.getArtist())
+                        .build())
+                .collect(Collectors.toList());
     }
 }

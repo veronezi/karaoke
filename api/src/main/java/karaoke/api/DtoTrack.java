@@ -1,12 +1,10 @@
 package karaoke.api;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 @ToString
 @EqualsAndHashCode(exclude = {"title", "artist", "length"})
+@Builder
 public class DtoTrack {
 
     @Getter

@@ -1,0 +1,9 @@
+version: '3.7'
+
+services:
+  full:
+    image: karaoke
+    ports:
+    - "8080"
+    environment:
+    - musixmatch_api_key=${musixmatch_api_key}

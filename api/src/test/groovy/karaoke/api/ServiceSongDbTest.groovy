@@ -3,20 +3,11 @@ package karaoke.api
 import karaoke.lyrics.Lyrics
 import karaoke.lyrics.LyricsService
 import karaoke.lyrics.Track
-import org.jboss.arquillian.container.test.api.Deployment
-import org.jboss.arquillian.junit.Arquillian
-import org.jboss.shrinkwrap.api.ShrinkWrap
-import org.jboss.shrinkwrap.api.spec.WebArchive
 import org.junit.Test
-import org.junit.runner.RunWith
-
-import javax.enterprise.context.ApplicationScoped
-import javax.inject.Inject
 
 import static org.junit.Assert.assertEquals
 import static org.junit.Assert.assertNotNull
 
-@RunWith(Arquillian)
 class ServiceSongDbTest {
 
     private static Lyrics lyrics = new Lyrics(
@@ -27,23 +18,12 @@ class ServiceSongDbTest {
             id: 100
     )
 
-    @Inject
-    ServiceSongDb db
-
-    @Deployment
-    static WebArchive war() { // use test name for the war otherwise arquillian ejb enricher doesn't work
-        return ShrinkWrap.create(WebArchive, "test.war").addClasses(
-                ServiceSongDb,
-                ServiceThirdPartyLyrics,
-                DtoLyrics,
-                DtoTrack,
-                LyricsService,
-                DymmyLyricsService,
-        )
-    }
 
     @Test
     void 'should get lyrics'() {
+        def db = new ServiceSongDb()
+        db.lyricsService = new ServiceThirdPartyLyrics()
+        db.lyricsService.lyricsService = new DymmyLyricsService()
         def result = db.getLyrics(100)
         assertNotNull(result)
         assertEquals(lyrics.id, result.id)
@@ -52,6 +32,9 @@ class ServiceSongDbTest {
 
     @Test
     void 'should get tracks page'() {
+        def db = new ServiceSongDb()
+        db.lyricsService = new ServiceThirdPartyLyrics()
+        db.lyricsService.lyricsService = new DymmyLyricsService()
         // by artist
         assertEquals(
                 ['a011', 'a012', 'a013', 'a014', 'a015', 'a016', 'a017', 'a018', 'a019', 'a020'],
@@ -143,7 +126,6 @@ class ServiceSongDbTest {
         )
     }
 
-    @ApplicationScoped
     static class DymmyLyricsService implements LyricsService {
 
         @Override
