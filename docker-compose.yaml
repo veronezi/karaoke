@@ -2,7 +2,7 @@ version: '3.7'
 
 services:
   renderer:
-    image: karaoke-renderer
+    image: veronezi/karaoke-renderer
     ports:
     - "3001:3000"
     environment:
@@ -10,7 +10,7 @@ services:
     - FULL_APP_HOST=full:8080
 
   proxy:
-    image: karaoke-proxy
+    image: veronezi/karaoke-proxy
     ports:
     - "80:3000"
     environment:
@@ -18,7 +18,7 @@ services:
     - RENDERER_URL=http://renderer:3000
 
   full:
-    image: karaoke
+    image: veronezi/karaoke
     ports:
     - "8080:8080"
     - "8000:8000"

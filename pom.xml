@@ -104,7 +104,6 @@
     <modules>
         <module>lyrics</module>
         <module>musixmatch</module>
-        <module>cache</module>
         <module>api</module>
         <module>webapp</module>
         <module>functional</module>

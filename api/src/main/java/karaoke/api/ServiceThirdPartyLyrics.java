@@ -1,6 +1,6 @@
 package karaoke.api;
 
-import karaoke.cache.Cached;
+import com.veronezi.cache.Cached;
 import karaoke.lyrics.Lyrics;
 import karaoke.lyrics.LyricsService;
 import karaoke.lyrics.Track;

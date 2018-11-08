@@ -17,6 +17,6 @@
 -->
 <beans>
     <interceptors>
-        <class>karaoke.cache.CachedInterceptor</class>
+        <class>com.veronezi.cache.CachedInterceptor</class>
     </interceptors>
 </beans>

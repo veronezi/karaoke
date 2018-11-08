@@ -30,11 +30,10 @@
             <artifactId>groovy-all</artifactId>
             <scope>test</scope>
         </dependency>
-
         <dependency>
             <groupId>${project.parent.groupId}</groupId>
-            <artifactId>karaoke-cache</artifactId>
-            <version>${project.version}</version>
+            <artifactId>sample-cache</artifactId>
+            <version>0.0.1-b1</version>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
