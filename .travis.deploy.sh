@@ -15,7 +15,7 @@ function deploy_docker_image () {
     fi
 }
 
-deploy_docker_image karaoke $KARAOKE_VERSION $TRAVIS_BUILD_NUMBER
-deploy_docker_image karaoke-proxy $KARAOKE_VERSION $TRAVIS_BUILD_NUMBER
-deploy_docker_image karaoke-renderer $KARAOKE_VERSION $TRAVIS_BUILD_NUMBER
+deploy_docker_image veronezi/karaoke $KARAOKE_VERSION $TRAVIS_BUILD_NUMBER
+deploy_docker_image veronezi/karaoke-proxy $KARAOKE_VERSION $TRAVIS_BUILD_NUMBER
+deploy_docker_image veronezi/karaoke-renderer $KARAOKE_VERSION $TRAVIS_BUILD_NUMBER
 echo "binaries uploaded"
