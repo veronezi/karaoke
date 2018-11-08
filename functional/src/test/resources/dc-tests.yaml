@@ -2,7 +2,7 @@ version: '3.7'
 
 services:
   full:
-    image: karaoke
+    image: veronezi/karaoke
     ports:
     - "8080"
     environment:
