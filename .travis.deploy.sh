@@ -15,6 +15,7 @@ function deploy_docker_image () {
     fi
 }
 
+echo "event type -> $TRAVIS_EVENT_TYPE"
 if [ "$TRAVIS_EVENT_TYPE" = "push" ]; then
     deploy_docker_image karaoke $KARAOKE_VERSION $TRAVIS_BUILD_NUMBER
     deploy_docker_image karaoke-proxy $KARAOKE_VERSION $TRAVIS_BUILD_NUMBER
