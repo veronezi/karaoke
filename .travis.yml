@@ -9,7 +9,7 @@ sudo: required
 
 cache:
   directories:
-  - $HOME/google-cloud-sdk
+  - $HOME/.gcloud
   - $HOME/.m2
 
 env:

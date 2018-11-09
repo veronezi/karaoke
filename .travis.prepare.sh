@@ -11,16 +11,17 @@ git diff
 docker logout
 echo "$DOCKER_PASSWORD" | docker login --username $DOCKER_USERNAME --password-stdin
 
-if [ ! -d $HOME/google-cloud-sdk/bin ]; then
-    rm -rf $HOME/google-cloud-sdk;
-    curl https://sdk.cloud.google.com -o install.gcloud.cli.sh
-    bash install.gcloud.cli.sh --disable-prompts
-    rm install.gcloud.cli.sh
-fi
-source $HOME/google-cloud-sdk/path.bash.inc
-gcloud --quiet version
-gcloud --quiet components update
-gcloud --quiet components update kubectl
+echo $GCLOUD_SERVICE_KEY | base64 --decode -i > $HOME/.gcloud/gcloud-service-key.json
+docker volume create gcloud_conf
 
-echo $GCLOUD_SERVICE_KEY | base64 --decode -i > ${HOME}/gcloud-service-key.json
-gcloud auth activate-service-account --key-file ${HOME}/gcloud-service-key.json
+# log in
+docker run --rm -ti \
+    -v gcloud_conf:/home/jdoe/.config \
+    -v $HOME/.gcloud/:/home/jdoe/data \
+    veronezi/gcloud:0.0.1-b3 \
+    auth activate-service-account --key-file /home/jdoe/data/gcloud-service-key.json
+# info
+docker run --rm -ti \
+    -v gcloud_conf:/home/jdoe/.config \
+    veronezi/gcloud:0.0.1-b3 \
+    info
