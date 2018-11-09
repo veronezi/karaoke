@@ -15,5 +15,6 @@ export TRAVIS_BRANCH="master"
 
 bash .travis.prepare.sh
 bash .travis.build.sh
+bash .travis.build.test.sh
 bash .travis.deploy.sh
 bash .travis.cleanup.sh
