@@ -11,8 +11,8 @@ git diff
 docker logout
 echo "$DOCKER_PASSWORD" | docker login --username $DOCKER_USERNAME --password-stdin
 
+echo $GCLOUD_SERVICE_KEY | base64 --decode -i
 echo $GCLOUD_SERVICE_KEY | base64 --decode -i > $HOME/.gcloud/gcloud-service-key.json
-cat $HOME/.gcloud/gcloud-service-key.json
 
 docker volume create gcloud_conf
 
