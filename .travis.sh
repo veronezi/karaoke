@@ -9,6 +9,7 @@ export DOCKER_USERNAME="${DOCKER_USERNAME:-tveronezi}"
 export DOCKER_PASSWORD="${DOCKER_PASSWORD:-aaaaaaaaa}"
 export BINTRAY_PASSWORD="${BINTRAY_PASSWORD:-aaaaaaaaa}"
 export GCLOUD_SERVICE_KEY="${GCLOUD_SERVICE_KEY:-aaaaaaaaa}"
+export musixmatch_api_key="${musixmatch_api_key:-aaaaaaaaa}"
 
 export TRAVIS_BRANCH="master"
 
