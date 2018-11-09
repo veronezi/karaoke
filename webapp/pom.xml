@@ -75,7 +75,7 @@
                             <verbose>true</verbose>
                             <images>
                                 <image>
-                                    <name>karaoke-static-install</name>
+                                    <name>veronezi/karaoke-static-install</name>
                                     <build>
                                         <filter>false</filter>
                                         <dockerFileDir>${project.build.directory}/docker-build/static</dockerFileDir>
@@ -83,7 +83,7 @@
                                     </build>
                                 </image>
                                 <image>
-                                    <name>karaoke-static</name>
+                                    <name>veronezi/karaoke-static</name>
                                     <build>
                                         <filter>false</filter>
                                         <dockerFileDir>${project.build.directory}/docker-build/static</dockerFileDir>
@@ -91,21 +91,21 @@
                                     </build>
                                 </image>
                                 <image>
-                                    <name>karaoke-renderer</name>
+                                    <name>veronezi/karaoke-renderer</name>
                                     <build>
                                         <filter>false</filter>
                                         <dockerFileDir>${project.build.directory}/docker-build/renderer</dockerFileDir>
                                     </build>
                                 </image>
                                 <image>
-                                    <name>karaoke-proxy</name>
+                                    <name>veronezi/karaoke-proxy</name>
                                     <build>
                                         <filter>false</filter>
                                         <dockerFileDir>${project.build.directory}/docker-build/proxy</dockerFileDir>
                                     </build>
                                 </image>
                                 <image>
-                                    <name>karaoke-war</name>
+                                    <name>veronezi/karaoke-war</name>
                                     <build>
                                         <filter>false</filter>
                                         <dockerFileDir>${project.build.directory}/docker-build/full</dockerFileDir>
@@ -113,56 +113,12 @@
                                     </build>
                                 </image>
                                 <image>
-                                    <name>karaoke</name>
+                                    <name>veronezi/karaoke</name>
                                     <build>
                                         <filter>false</filter>
                                         <dockerFileDir>${project.build.directory}/docker-build/full</dockerFileDir>
                                         <dockerFile>app.dockerfile</dockerFile>
                                     </build>
-                                </image>
-                            </images>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>dev</id>
-                        <goals>
-                            <goal>run</goal>
-                        </goals>
-                        <phase/>
-                        <configuration>
-                            <verbose>true</verbose>
-                            <images>
-                                <image>
-                                    <name>karaoke-static</name>
-                                    <run>
-                                        <volumes>
-                                            <bind>
-                                                <volume>${project.basedir}/src/main/docker/static/base/src:/opt/base/src</volume>
-                                                <volume>${project.build.directory}/output:/opt/output</volume>
-                                            </bind>
-                                        </volumes>
-                                    </run>
-                                </image>
-                                <image>
-                                    <name>karaoke</name>
-                                    <run>
-                                        <ports>
-                                            <port>${server.port}:8080</port>
-                                            <port>${server.debug.port}:8000</port>
-                                        </ports>
-                                        <env>
-                                            <musixmatch_api_key>${musixmatch_api_key}</musixmatch_api_key>
-                                        </env>
-                                        <volumes>
-                                            <bind>
-                                                <volume>${project.build.directory}/output:/opt/tomee/webapps/ROOT/app</volume>
-                                            </bind>
-                                        </volumes>
-                                        <cmd>
-                                            <arg>jpda</arg>
-                                            <arg>run</arg>
-                                        </cmd>
-                                    </run>
                                 </image>
                             </images>
                         </configuration>
