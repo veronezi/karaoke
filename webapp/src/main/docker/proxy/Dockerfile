@@ -5,7 +5,7 @@ WORKDIR /opt
 COPY init.package.json /opt/package.json
 RUN npm install
 COPY package.json /opt/package.json
-COPY --from=karaoke-static /opt/output /opt/app
+COPY --from=veronezi/karaoke-static /opt/output /opt/app
 COPY app.js .
 
 EXPOSE 3000

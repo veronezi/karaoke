@@ -21,7 +21,7 @@
         <dependency>
             <groupId>${project.parent.groupId}</groupId>
             <artifactId>sample-cache</artifactId>
-            <version>0.0.1-b1</version>
+            <version>${sample.cache.version}</version>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
