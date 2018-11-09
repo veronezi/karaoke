@@ -13,7 +13,9 @@ echo "$DOCKER_PASSWORD" | docker login --username $DOCKER_USERNAME --password-st
 
 if [ ! -d $HOME/google-cloud-sdk/bin ]; then
     rm -rf $HOME/google-cloud-sdk;
-    curl https://sdk.cloud.google.com | bash
+    curl https://sdk.cloud.google.com -o install.gcloud.cli.sh
+    bash install.gcloud.cli.sh --disable-prompts
+    rm install.gcloud.cli.sh
 fi
 source $HOME/google-cloud-sdk/path.bash.inc
 gcloud --quiet version
