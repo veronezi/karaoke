@@ -9,11 +9,12 @@ sudo: required
 
 cache:
   directories:
+  - $HOME/.gcloud
   - $HOME/.m2
 
 env:
   global:
-  - KARAOKE_VERSION=0.0.1
+  - MY_VERSION=0.0.1
 
 addons:
   chrome: stable
@@ -23,6 +24,7 @@ before_install:
 
 script:
 - bash .travis.build.sh
+- bash .travis.build.test.sh
 
 deploy:
   provider: script
