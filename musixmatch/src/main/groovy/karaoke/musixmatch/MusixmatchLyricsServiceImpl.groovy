@@ -133,12 +133,13 @@ class MusixmatchLyricsServiceImpl implements LyricsService {
     }
 
     private Collection<Track> findPageByArtistName(String artistName, int page) {
-        def resp = target.path('track.search')
+        def t = target.path('track.search')
                 .queryParam('q_artist', artistName)
                 .queryParam('page_size', 10)
                 .queryParam('page', page)
                 .queryParam('has_lyrics', 1)
-                .request().get()
+        logger.info("[will execute]' ${t.uri}")
+        def resp = t.request().get()
         def json = new JsonSlurper().parse(
                 resp.getEntity() as InputStream
         )
