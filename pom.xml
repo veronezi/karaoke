@@ -26,7 +26,7 @@
 
         <!--suppress UnresolvedMavenProperty -->
         <musixmatch_api_key>${env.musixmatch_api_key}</musixmatch_api_key>
-        <sample.cache.version>0.0.1-b12</sample.cache.version>
+        <sample.cache.version>0.0.1-b29</sample.cache.version>
     </properties>
     <dependencyManagement>
         <dependencies>
